@@ -62,7 +62,7 @@ terraform-aws-three-tier-platform/
 ├── outputs.tf
 ├── terraform.tfvars
 ├── providers.tf
-── bootstrap/            # One-time setup (S3, DynamoDB, OIDC, IAM)
+├── bootstrap/            # One-time setup (S3, DynamoDB, OIDC, IAM)
 ├── app/                  # Sample Flask application
 ├── .github/workflows/    # CI/CD pipeline
 ├── destroy.sh            # Script de teardown
