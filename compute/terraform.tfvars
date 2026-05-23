@@ -1,0 +1,10 @@
+project_name          = "three-tier-platform"
+aws_region            = "eu-west-1"
+vpc_id                = "vpc-023ded8476e5612e2"
+private_subnet_ids    = ["subnet-0864b60b916cdd1fe", "subnet-0abb72e82e5730792"]
+ecs_security_group_id = "sg-01d2da1a341961cf3"
+db_endpoint           = "three-tier-platform-db.c7i0i2c6w86p.eu-west-1.rds.amazonaws.com"
+db_name               = "appdb"
+db_username           = "dbadmin"
+db_password           = "ChangeMe123!"
+target_group_arn      = "arn:aws:elasticloadbalancing:eu-west-1:900881669003:targetgroup/three-tier-platform-ecs-tg/9138deb1bde6a6f9"
