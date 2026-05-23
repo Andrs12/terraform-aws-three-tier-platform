@@ -91,7 +91,7 @@ Nota: No hay carpeta `modules/`. Cada fase es un directorio raíz independiente 
 | database | **✅ Completado** | RDS PostgreSQL `db.t3.micro` (15.10), subnet group, parameter group |
 | alb | **✅ Completado** | ALB, target group, HTTP listener |
 | CI/CD | **✅ Completado** | GitHub Actions workflow con OIDC, ECR push, ECS deploy |
-| docs | **⬜ Pendiente** | README final, diagramas |
+| docs | **✅ Completado** | README final con arquitectura, guía de despliegue, endpoints y troubleshooting |
 
 ## Configuración del Backend (Pendiente por fase)
 
@@ -166,7 +166,13 @@ internet_gateway_id     = igw-044479e1f87671238
 
 ## Siguiente Paso Inmediato
 
-Fase **documentación**: Crear README final con instrucciones de uso, diagrama de arquitectura y lista de recursos creados.
+**Proyecto completado.** Todas las fases implementadas y validadas:
+- ✅ Infraestructura three-tier funcionando end-to-end
+- ✅ CI/CD pipeline con OIDC
+- ✅ Documentación completa
+- ✅ Script de destrucción automatizada
+
+**ALB Endpoint:** `http://three-tier-platform-alb-1909808281.eu-west-1.elb.amazonaws.com`
 
 ## Reglas para el Agente
 
