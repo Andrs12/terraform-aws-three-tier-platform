@@ -1,21 +1,16 @@
-output "cluster_endpoint" {
-  description = "The writer endpoint for the Aurora cluster."
-  value       = aws_rds_cluster.database.endpoint
+output "db_endpoint" {
+  description = "The endpoint of the RDS instance."
+  value       = aws_db_instance.database.endpoint
 }
 
-output "reader_endpoint" {
-  description = "The reader endpoint for the Aurora cluster."
-  value       = aws_rds_cluster.database.reader_endpoint
+output "db_arn" {
+  description = "The ARN of the RDS instance."
+  value       = aws_db_instance.database.arn
 }
 
-output "cluster_arn" {
-  description = "The ARN of the Aurora cluster."
-  value       = aws_rds_cluster.database.arn
-}
-
-output "cluster_id" {
-  description = "The ID of the Aurora cluster."
-  value       = aws_rds_cluster.database.id
+output "db_id" {
+  description = "The ID of the RDS instance."
+  value       = aws_db_instance.database.id
 }
 
 output "db_subnet_group_name" {

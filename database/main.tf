@@ -32,11 +32,11 @@ resource "aws_db_subnet_group" "database" {
   }
 }
 
-# ── DB Cluster Parameter Group ──────────────────────────────────────────────
+# ── DB Parameter Group ──────────────────────────────────────────────────────
 
-resource "aws_rds_cluster_parameter_group" "database" {
-  name   = "${var.project_name}-aurora-pg-params"
-  family = "aurora-postgresql15"
+resource "aws_db_parameter_group" "database" {
+  name   = "${var.project_name}-pg-params"
+  family = "postgres15"
 
   parameter {
     name  = "log_statement"
@@ -49,55 +49,39 @@ resource "aws_rds_cluster_parameter_group" "database" {
   }
 
   tags = {
-    Name = "${var.project_name}-aurora-pg-params"
+    Name = "${var.project_name}-pg-params"
   }
 }
 
-# ── Aurora PostgreSQL Cluster ───────────────────────────────────────────────
+# ── PostgreSQL RDS Instance ─────────────────────────────────────────────────
 
-resource "aws_rds_cluster" "database" {
-  cluster_identifier     = "${var.project_name}-aurora-cluster"
-  engine                 = "aurora-postgresql"
-  engine_version         = "15.4"
-  database_name          = var.db_name
-  master_username        = var.db_username
-  master_password        = var.db_password
-  db_subnet_group_name   = aws_db_subnet_group.database.name
-  vpc_security_group_ids = [var.rds_security_group_id]
+resource "aws_db_instance" "database" {
+  identifier     = "${var.project_name}-db"
+  engine         = "postgres"
+  engine_version = "15.10"
+  instance_class = var.instance_class
 
-  db_cluster_parameter_group_name = aws_rds_cluster_parameter_group.database.name
+  db_name  = var.db_name
+  username = var.db_username
+  password = var.db_password
 
-  storage_encrypted   = true
-  deletion_protection = var.deletion_protection
-
-  skip_final_snapshot       = !var.deletion_protection
-  final_snapshot_identifier = var.deletion_protection ? "${var.project_name}-final-snapshot" : null
-
-  backup_retention_period = 7
-  preferred_backup_window = "03:00-04:00"
-
-  tags = {
-    Name = "${var.project_name}-aurora-cluster"
-  }
-}
-
-# ── Aurora PostgreSQL Cluster Instance ──────────────────────────────────────
-
-resource "aws_rds_cluster_instance" "database" {
-  count = var.instance_count
-
-  identifier         = "${var.project_name}-aurora-instance-${count.index}"
-  cluster_identifier = aws_rds_cluster.database.id
-  instance_class     = var.instance_class
-  engine             = aws_rds_cluster.database.engine
-  engine_version     = aws_rds_cluster.database.engine_version
+  allocated_storage     = 20
+  max_allocated_storage = 100
+  storage_type          = "gp2"
+  storage_encrypted     = true
 
   db_subnet_group_name    = aws_db_subnet_group.database.name
-  db_parameter_group_name = aws_rds_cluster_parameter_group.database.name
+  vpc_security_group_ids  = [var.rds_security_group_id]
+  parameter_group_name = aws_db_parameter_group.database.name
 
   publicly_accessible = false
 
+  backup_retention_period = 1
+  skip_final_snapshot     = true
+
+  deletion_protection = var.deletion_protection
+
   tags = {
-    Name = "${var.project_name}-aurora-instance-${count.index}"
+    Name = "${var.project_name}-db"
   }
 }

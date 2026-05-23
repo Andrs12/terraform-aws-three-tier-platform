@@ -44,15 +44,9 @@ variable "db_password" {
 }
 
 variable "instance_class" {
-  description = "Instance class for the Aurora instances."
+  description = "Instance class for the RDS instance."
   type        = string
-  default     = "db.serverless"
-}
-
-variable "instance_count" {
-  description = "Number of Aurora instances (1 writer + N-1 readers)."
-  type        = number
-  default     = 1
+  default     = "db.t3.micro"
 }
 
 variable "deletion_protection" {
