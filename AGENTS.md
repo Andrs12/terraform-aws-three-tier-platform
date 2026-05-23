@@ -52,11 +52,28 @@ terraform-aws-three-tier-platform/
 ├── security/           # Security Groups (ALB, ECS, RDS)
 │   ├── main.tf
 │   ├── variables.tf
-│   └── outputs.tf
+│   ├── outputs.tf
+│   └── terraform.tfvars
 ├── database/           # RDS PostgreSQL instance
 │   ├── main.tf
 │   ├── variables.tf
 │   └── outputs.tf
+├── compute/            # ECS Fargate, ECR, CloudWatch
+│   ├── main.tf
+│   ├── variables.tf
+│   ├── outputs.tf
+│   └── terraform.tfvars
+├── alb/                # Application Load Balancer
+│   ├── main.tf
+│   ├── variables.tf
+│   ├── outputs.tf
+│   └── terraform.tfvars
+├── app/                # Sample Flask application
+│   ├── Dockerfile
+│   ├── app.py
+│   └── requirements.txt
+├── .github/workflows/  # CI/CD pipelines
+│   └── deploy.yml
 ├── .gitignore
 └── AGENTS.md           # Este archivo
 ```
@@ -70,9 +87,10 @@ Nota: No hay carpeta `modules/`. Cada fase es un directorio raíz independiente 
 | bootstrap | **✅ Completado** | S3 `three-tier-platform-tfstate-900881669003`, DynamoDB `three-tier-platform-tflock`, OIDC provider importado, IAM role `three-tier-platform-github-actions-role` |
 | networking | **✅ Completado** | VPC `10.0.0.0/16`, 2 AZs (eu-west-1a, 1b), subnets públicas/app/db, IGW, NAT GW, route tables |
 | security | **✅ Completado** | Security groups: ALB (`sg-0c8d6a6bec5f6dc7c`), ECS (`sg-01d2da1a341961cf3`), RDS (`sg-01f6d45b56922c9c1`) |
-| compute | **⬜ Pendiente** | ECS Fargate, ECR, task definitions |
+| compute | **✅ Completado** | ECS Fargate cluster, task definition, service, ECR, CloudWatch logs |
 | database | **✅ Completado** | RDS PostgreSQL `db.t3.micro` (15.10), subnet group, parameter group |
-| CI/CD | **⬜ Pendiente** | GitHub Actions workflows |
+| alb | **✅ Completado** | ALB, target group, HTTP listener |
+| CI/CD | **✅ Completado** | GitHub Actions workflow con OIDC, ECR push, ECS deploy |
 | docs | **⬜ Pendiente** | README final, diagramas |
 
 ## Configuración del Backend (Pendiente por fase)
@@ -148,7 +166,7 @@ internet_gateway_id     = igw-044479e1f87671238
 
 ## Siguiente Paso Inmediato
 
-Fase **compute**: Crear ECS Fargate cluster, task definition, service y ECR repository en un nuevo directorio `compute/`. Necesita referenciar los outputs de networking (vpc_id, private_subnet_ids) y security (ecs_security_group_id).
+Fase **documentación**: Crear README final con instrucciones de uso, diagrama de arquitectura y lista de recursos creados.
 
 ## Reglas para el Agente
 
