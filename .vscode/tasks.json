@@ -1,0 +1,53 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Destroy Infrastructure",
+      "type": "shell",
+      "command": "./destroy.sh",
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "clear": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Test Health Endpoint",
+      "type": "shell",
+      "command": "curl -s http://three-tier-platform-alb-1909808281.eu-west-1.elb.amazonaws.com/health | jq .",
+      "group": "test",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Test DB Connection",
+      "type": "shell",
+      "command": "curl -s http://three-tier-platform-alb-1909808281.eu-west-1.elb.amazonaws.com/db-check | jq .",
+      "group": "test",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Check ECS Status",
+      "type": "shell",
+      "command": "aws ecs describe-services --cluster three-tier-platform-cluster --services three-tier-platform-app-service --query 'services[0].deployments[0].[status,runningCount,pendingCount]' --output table",
+      "group": "test",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    }
+  ]
+}
