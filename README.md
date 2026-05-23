@@ -51,6 +51,46 @@ Infraestructura AWS **three-tier production-grade** desplegada con Terraform.
 
 ```
 terraform-aws-three-tier-platform/
+├── modules/
+│   ├── networking/       # VPC, subnets, IGW, NAT GW
+│   ├── security/         # Security Groups
+│   ├── database/         # RDS PostgreSQL
+│   ├── compute/          # ECS, ECR, CloudWatch
+│   └── alb/              # Application Load Balancer
+├── main.tf               # Root module (orchestrates all modules)
+├── variables.tf
+├── outputs.tf
+├── terraform.tfvars
+├── providers.tf
+── bootstrap/            # One-time setup (S3, DynamoDB, OIDC, IAM)
+├── app/                  # Sample Flask application
+├── .github/workflows/    # CI/CD pipeline
+├── destroy.sh            # Script de teardown
+└── README.md
+```
+
+## Despliegue
+
+### 1. Bootstrap (one-time)
+
+```bash
+cd bootstrap
+terraform init
+terraform apply -auto-approve
+```
+
+### 2. Infraestructura Completa (Single Apply)
+
+Desde la raíz del proyecto:
+
+```bash
+terraform init
+terraform plan
+terraform apply -auto-approve
+```
+
+Esto despliega Networking, Security, Database, ALB y Compute en el orden correcto automáticamente.
+terraform-aws-three-tier-platform/
 ├── bootstrap/          # S3 state, DynamoDB lock, OIDC, IAM role
 ── networking/         # VPC, subnets, IGW, NAT GW, route tables
 ├── security/           # Security Groups (ALB, ECS, RDS)

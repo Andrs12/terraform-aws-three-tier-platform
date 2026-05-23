@@ -6,18 +6,10 @@ echo "  Destroying Three-Tier Platform"
 echo "========================================"
 echo ""
 
-REGIONS=("alb" "compute" "database" "security" "networking")
+echo "Running terraform destroy from root..."
+terraform destroy -auto-approve
 
-for dir in "${REGIONS[@]}"; do
-    echo "----------------------------------------"
-    echo "Destroying $dir..."
-    echo "----------------------------------------"
-    cd "$dir"
-    terraform destroy -auto-approve
-    cd ..
-    echo ""
-done
-
+echo ""
 echo "========================================"
 echo "  All resources destroyed successfully!"
 echo "========================================"

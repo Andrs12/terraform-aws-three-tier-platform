@@ -1,0 +1,11 @@
+aws_region          = "eu-west-1"
+project_name        = "three-tier-platform"
+owner               = "andres"
+vpc_cidr            = "10.0.0.0/16"
+azs                 = ["eu-west-1a", "eu-west-1b"]
+app_port            = 8080
+instance_class      = "db.t3.micro"
+db_name             = "appdb"
+db_username         = "dbadmin"
+db_password         = "ChangeMe123!"
+deletion_protection = false
